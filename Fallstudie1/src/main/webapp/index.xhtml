@@ -12,21 +12,29 @@
 	<h:form>
 		<p:commandButton value="Um Daten zu ändern melden Sie sich bitte an"
 			icon="pi pi-pencil" action="#{co2controller.startEdit()}" />
-		<p:dataTable var="co2emission" value="#{co2Liste.liste}">
+
+
+
+		<p:dataTable var="co2emission" value="#{co2Liste.liste}"
+			widgetVar="emmissionTable" emtyMessage="Keine Daten gefunden"
+			allowUnsorting="true" sortMode="single">
 			<f:facet name="header">
 
 				<h2>Emissionen Übersicht</h2>
 			</f:facet>
 
-			<p:column headerText="Land">
-				<p:outputLabel value="#{co2emission.land}" />
+			<p:column headerText="Land" filterBy="#{co2emission.land}"
+				filterMatchMode="contains">
+				<h:outputText value="#{co2emission.land}" />
 			</p:column>
 
-			<p:column headerText="Zueletzt aktualisiert">
+			<p:column headerText="Zueletzt aktualisiert"
+				sortBy="#{co2emission.datum}" sortOrder="desc">
 				<p:datePicker value="#{co2emission.datum}" disabled="true" />
 			</p:column>
 
-			<p:column headerText="CO2-Emissionen in Mio. t">
+			<p:column headerText="CO2-Emissionen in Mio. t"
+				sortBy="#{co2emission.co2Wert}" sortOrder="desc">
 				<p:outputLabel value="#{co2emission.co2Wert}" />
 			</p:column>
 
