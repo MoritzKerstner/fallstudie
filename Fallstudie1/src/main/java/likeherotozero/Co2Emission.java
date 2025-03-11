@@ -24,6 +24,14 @@ public class Co2Emission {
 		return land;
 	}
 
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+
 	public void setLand(String land) {
 		this.land = land;
 	}

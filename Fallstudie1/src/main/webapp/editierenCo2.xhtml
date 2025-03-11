@@ -36,6 +36,13 @@
 				<p:inputText value="#{co2emission.co2Wert}" />
 			</p:column>
 
+			<p:column>
+				<p:commandButton value="Löschen" icon="pi pi-trash"
+					action="#{co2controller.deleteEmission(co2emission)}">
+				</p:commandButton>
+			</p:column>
+
+
 		</p:dataTable>
 		<p:commandButton value="Speichern" icon="pi pi-pencil"
 			action="#{co2controller.stopEdit()}" />

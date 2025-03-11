@@ -98,28 +98,32 @@ public class Co2ListeController implements Serializable {
 		this.neuerWert = neuerWert;
 	}
 
-	public void deleteLand(int id) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("todoAppPersistenceUnit");
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction t = em.getTransaction();
+	public void deleteEmission(Co2Emission emission) {
 
-		try {
-			t.begin();
-			Co2Emission emission = em.find(Co2Emission.class, id);
-			if (emission != null) {
-				co2liste.getListe().remove(emission); // Lösche aus der lokalen Liste
-				em.remove(emission); // Lösche aus der Datenbank
-				System.out.println("Gelöscht: " + emission.getLand());
-			}
-			t.commit();
-		} catch (Exception e) {
-			if (t.isActive()) {
-				t.rollback();
-			}
-			e.printStackTrace();
-		} finally {
-			em.close();
-		}
+	    EntityManagerFactory emf = Persistence.createEntityManagerFactory("emissionPersistenceUnit");
+	    EntityManager em = emf.createEntityManager();
+
+	    try {
+	        EntityTransaction t = em.getTransaction();
+	        t.begin();
+
+	        Co2Emission managedEmission = em.find(Co2Emission.class, emission.getID());
+	        if (managedEmission != null) {
+	            em.remove(managedEmission);
+	            System.out.println("Gelöscht: " + managedEmission.getLand() + ", Wert: " + managedEmission.getCo2Wert());
+	        }
+
+	        t.commit();
+	        System.out.println("Löschen abgeschlossen");
+	    } catch (Exception e) {
+	        System.err.println("Fehler beim Löschen: " + e.getMessage());
+	        e.printStackTrace();
+	        if (em.getTransaction().isActive()) {
+	            em.getTransaction().rollback();
+	        }
+	    } finally {
+	        em.close();
+	    }
 	}
 
 }
