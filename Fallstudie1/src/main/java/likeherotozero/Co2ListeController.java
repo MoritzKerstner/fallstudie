@@ -21,8 +21,7 @@ public class Co2ListeController implements Serializable {
 	private double neuerWert;
 
 	private List<Co2Emission> emissionList;
-
-	// Die richtige Getter-Methode für EmissionList
+	
 	public List<Co2Emission> getEmissionList() {
 		if (emissionList == null) {
 			emissionList = co2liste.getListe();
@@ -37,20 +36,15 @@ public class Co2ListeController implements Serializable {
 	public String stopEdit() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("emissionPersistenceUnit");
 		EntityManager em = emf.createEntityManager();
-
 		try {
 			EntityTransaction t = em.getTransaction();
 			t.begin();
 
 			for (Co2Emission a : getEmissionList()) {
-				System.out.println("Speichere: " + a.getLand() + ", Wert: " + a.getCo2Wert());
 				em.merge(a);
 			}
-
 			t.commit();
-			System.out.println("Speichern abgeschlossen");
 		} catch (Exception e) {
-			System.err.println("Fehler beim Speichern: " + e.getMessage());
 			e.printStackTrace();
 			if (em.getTransaction().isActive()) {
 				em.getTransaction().rollback();
@@ -98,32 +92,27 @@ public class Co2ListeController implements Serializable {
 		this.neuerWert = neuerWert;
 	}
 
-	public void deleteEmission(Co2Emission emission) {
+	public String deleteEmission(Co2Emission emission) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("emissionPersistenceUnit");
+		EntityManager em = emf.createEntityManager();
 
-	    EntityManagerFactory emf = Persistence.createEntityManagerFactory("emissionPersistenceUnit");
-	    EntityManager em = emf.createEntityManager();
+		try {
+			EntityTransaction t = em.getTransaction();
+			t.begin();
+			Co2Emission managedEmission = em.find(Co2Emission.class, emission.getID());
+			if (managedEmission != null) {
+				em.remove(managedEmission);
+			}
+			t.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
+		} finally {
+			em.close();
+		}
 
-	    try {
-	        EntityTransaction t = em.getTransaction();
-	        t.begin();
-
-	        Co2Emission managedEmission = em.find(Co2Emission.class, emission.getID());
-	        if (managedEmission != null) {
-	            em.remove(managedEmission);
-	            System.out.println("Gelöscht: " + managedEmission.getLand() + ", Wert: " + managedEmission.getCo2Wert());
-	        }
-
-	        t.commit();
-	        System.out.println("Löschen abgeschlossen");
-	    } catch (Exception e) {
-	        System.err.println("Fehler beim Löschen: " + e.getMessage());
-	        e.printStackTrace();
-	        if (em.getTransaction().isActive()) {
-	            em.getTransaction().rollback();
-	        }
-	    } finally {
-	        em.close();
-	    }
+		return "co2Emission";
 	}
-
 }
