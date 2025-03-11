@@ -18,7 +18,7 @@ public class Co2ListeController implements Serializable
     }
     
     public String stopEdit() {
-    	EntityManagerFactory emf = Persistence.createEntityManagerFactory("todoAppPersistenceUnit");
+    	EntityManagerFactory emf = Persistence.createEntityManagerFactory("emissionPersistenceUnit");
     	
     	EntityManager em = emf.createEntityManager();
         EntityTransaction t = em.getTransaction();
