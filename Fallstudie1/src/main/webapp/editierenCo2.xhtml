@@ -16,16 +16,19 @@
 				<h2>Emissionen Übersicht</h2>
 			</f:facet>
 
-			<p:column headerText="Land">
-				<p:inputText value="#{co2emission.land}" />
+			<p:column headerText="Land" filterBy="#{co2emission.land}"
+				filterMatchMode="contains">
+				<p:inputText value="#{co2emission.land}" disabled="true"/>
 			</p:column>
 
-			<p:column headerText="Zueletzt aktualisiert">
+		<p:column headerText="Zueletzt aktualisiert"
+				sortBy="#{co2emission.datum}" sortOrder="desc">
 				<p:datePicker id="zuletztGeaendert" value="#{co2emission.datum}"
 					pattern="dd.MM.yy" />
 			</p:column>
 
-			<p:column headerText="CO2-Emissionen in Mio. t">
+			<p:column headerText="CO2-Emissionen in Mio. t"
+				sortBy="#{co2emission.co2Wert}" sortOrder="desc">
 				<p:inputText value="#{co2emission.co2Wert}" />
 			</p:column>
 
