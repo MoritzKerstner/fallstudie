@@ -15,7 +15,7 @@
 
 
 
-		<p:dataTable var="co2emission" value="#{co2Liste.liste}"
+		<p:dataTable var="co2emission" value="#{co2controller.emissionList}"
 			widgetVar="emmissionTable" emtyMessage="Keine Daten gefunden"
 			allowUnsorting="true" sortMode="single">
 			<f:facet name="header">
@@ -24,12 +24,12 @@
 			</f:facet>
 
 			<p:column headerText="Land" filterBy="#{co2emission.land}"
-				filterMatchMode="contains">
+				filterMatchMode="contains" sortBy="#{co2emission.land}">>
 				<h:outputText value="#{co2emission.land}" />
 			</p:column>
 
 			<p:column headerText="Zueletzt aktualisiert"
-				sortBy="#{co2emission.datum}" sortOrder="desc">
+				sortBy="#{co2emission.datum}">
 				<p:datePicker value="#{co2emission.datum}" disabled="true" />
 			</p:column>
 

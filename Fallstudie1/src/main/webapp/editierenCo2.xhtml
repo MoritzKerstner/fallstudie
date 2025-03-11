@@ -10,19 +10,22 @@
 <h:body>
 	<h1>Werte</h1>
 	<h:form>
-		<p:dataTable var="co2emission" value="#{co2Liste.liste}">
+		<p:commandButton value="Speichern" icon="pi pi-pencil"
+			action="#{co2controller.stopEdit()}" />
+		<p:commandButton value="Bearbeiten abbrechen" action="index" />
+		<p:dataTable var="co2emission" value="#{co2controller.emissionList}">
 			<f:facet name="header">
 
 				<h2>Emissionen Übersicht</h2>
 			</f:facet>
 
 			<p:column headerText="Land" filterBy="#{co2emission.land}"
-				filterMatchMode="contains">
-				<p:inputText value="#{co2emission.land}" disabled="true"/>
+				filterMatchMode="contains" sortBy="#{co2emission.land}">
+				<p:inputText value="#{co2emission.land}" disabled="true" />
 			</p:column>
 
-		<p:column headerText="Zueletzt aktualisiert"
-				sortBy="#{co2emission.datum}" sortOrder="desc">
+			<p:column headerText="Zueletzt aktualisiert"
+				sortBy="#{co2emission.datum}">
 				<p:datePicker id="zuletztGeaendert" value="#{co2emission.datum}"
 					pattern="dd.MM.yy" />
 			</p:column>
@@ -35,6 +38,7 @@
 		</p:dataTable>
 		<p:commandButton value="Speichern" icon="pi pi-pencil"
 			action="#{co2controller.stopEdit()}" />
+		<p:commandButton value="Bearbeiten abbrechen" action="index" />
 	</h:form>
 </h:body>
 </html>
