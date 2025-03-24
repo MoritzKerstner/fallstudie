@@ -1,7 +1,6 @@
 package likeherotozero;
 
 import java.util.Date;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +12,7 @@ public class Co2Emission {
 
 	private String land;
 
+	@Temporal(TemporalType.DATE)
 	Date datum;
 
 	private double co2Wert;
@@ -22,6 +22,14 @@ public class Co2Emission {
 
 	public String getLand() {
 		return land;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 
 	public void setLand(String land) {
@@ -50,8 +58,5 @@ public class Co2Emission {
 		this.datum = datum;
 		this.co2Wert = co2Wert;
 	}
-	
-
-
 
 }

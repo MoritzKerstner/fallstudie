@@ -7,31 +7,82 @@
 	<title>Co² Werte Ändern</title>
 	<link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
 </h:head>
-<h:body>
-	<h1>Werte</h1>
-	<h:form>
-		<p:dataTable var="co2emission" value="#{co2Liste.liste}">
-			<f:facet name="header">
+<body>
+	<header>
+		<h1>Like Hero To Zero</h1>
+		<nav>
+			<ul>
+				<li><a href="#home">Home</a></li>
+				<li><a href="#data">CO2-Daten</a></li>
+				<li><a href="#about">Über uns</a></li>
+				<li><a href="#contact">Kontakt</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<section id="home">
+			<h2>Willkommen bei Like Hero To Zero</h2>
+			<p>Unser Ziel ist es, die weltweiten CO2-Emissionen transparent
+				darzustellen und zu reduzieren.</p>
+		</section>
+		<section id="data">
+			<h2>CO2-Daten</h2>
+			<h:form>
+				<p:commandButton value="Speichern" icon="pi pi-pencil"
+					action="#{co2controller.stopEdit()}" />
+				<p:commandButton value="Bearbeiten abbrechen" action="index" />
+				<p:commandButton value="Daten hinzufügen" action="neuesLand" />
+				<p:dataTable var="co2emission" value="#{co2controller.emissionList}">
+					<f:facet name="header">
+						<h2>Emissionen Übersicht</h2>
+					</f:facet>
 
-				<h2>Emissionen Übersicht</h2>
-			</f:facet>
+					<p:column headerText="Land" filterBy="#{co2emission.land}"
+						filterMatchMode="contains" sortBy="#{co2emission.land}">
+						<p:inputText value="#{co2emission.land}" disabled="true" />
+					</p:column>
 
-			<p:column headerText="Land">
-				<p:inputText value="#{co2emission.land}" />
-			</p:column>
+					<p:column headerText="Zuletzt aktualisiert"
+						sortBy="#{co2emission.datum}">
+						<p:datePicker id="zuletztGeaendert" value="#{co2emission.datum}"
+							pattern="dd.MM.yy" />
+					</p:column>
 
-			<p:column headerText="Zueletzt aktualisiert">
-				<p:datePicker id="zuletztGeaendert" value="#{co2emission.datum}"
-					pattern="dd.MM.yy" />
-			</p:column>
+					<p:column headerText="CO2-Emissionen in Mio. t"
+						sortBy="#{co2emission.co2Wert}" sortOrder="desc">
+						<p:inputText value="#{co2emission.co2Wert}" />
+					</p:column>
 
-			<p:column headerText="CO2-Emissionen in Mio. t">
-				<p:inputText value="#{co2emission.co2Wert}" />
-			</p:column>
-
-		</p:dataTable>
-		<p:commandButton value="Speichern" icon="pi pi-pencil"
-			action="#{co2controller.stopEdit()}" />
-	</h:form>
-</h:body>
+					<p:column>
+						<p:commandButton id="deleteButton_#{co2emission.ID}"
+							value="Löschen" icon="pi pi-trash"
+							action="#{co2controller.deleteEmission(co2emission)}"
+							oncomplete="changeButtonText('deleteButton_#{co2emission.ID}');" />
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="Speichern" icon="pi pi-pencil"
+					action="#{co2controller.stopEdit()}" />
+				<p:commandButton value="Bearbeiten abbrechen" action="index" />
+			</h:form>
+		</section>
+		<section id="about">
+			<h2>Über uns</h2>
+			<p>Wir sind eine PR-Agentur, die verschiedene Naturverbände und
+				Vereine unterstützt.</p>
+		</section>
+		<section id="contact">
+			<h2>Kontakt</h2>
+			<form>
+				<label for="name">Name:</label> <input type="text" id="name"
+					name="name" /> <label for="email">E-Mail:</label> <input
+					type="email" id="email" name="email" /> <label for="message">Nachricht:</label>
+				<textarea id="message" name="message"></textarea>
+				<button type="submit">Senden</button>
+			</form>
+		</section>
+	</main>
+	<footer>
+		<p>&#169; 2025 Like Hero To Zero</p>
+	</footer>
+</body>
 </html>
